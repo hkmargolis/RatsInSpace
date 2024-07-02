@@ -36,6 +36,7 @@ public class PC {
     private int mana; //magic
     private int defense;
     private int speed;
+    private int xp;
     private Scanner in;
     public PC(String name, String cc, String ct) {
         in = new Scanner(System.in);
@@ -43,12 +44,13 @@ public class PC {
         this.items = new ArrayList<Item>();
         this.speed = INIT_SPEED;
         this.mana = INIT_MANA;
+        this.xp = 0;
+        this.level = 1;
         //generate character class and type
         setCharacterClass(cc);
         setCharacterType(ct);
         setCharacterStats();
         this.hitPoints = MAX_HIT_POINTS;
-        this.level = 1;
         //assign proficiency bonus to stats based on character class
 
 
@@ -134,8 +136,9 @@ public class PC {
     }
 
     public Item dropItem(int index) {
-        Item item = this.items.get(index);
-        this.items.remove(index - 1);
+        Item item = items.get(index);
+        items.remove(index - 1);
+
         if(item.getItemName().equals("Spacesuit")) {
             //temporary status effect
             hitPoints -= item.getItemValue();
@@ -147,9 +150,10 @@ public class PC {
     }
 
     public void dropItem(String name) {
+        Item itemToDrop = null;
         for(Item item : items) {
             if(item.getItemName().equals(name)) {
-                items.remove(item);
+                itemToDrop = item;
                 if(item.getItemName().equals("Spacesuit")) {
                     //temporary status effect
                     hitPoints += item.getItemValue();
@@ -158,9 +162,8 @@ public class PC {
                     hitPoints += item.getItemValue();
                 }
             }
-
         }
-
+        items.remove(itemToDrop);
     }
     public boolean hasWeaponsOrSuperPacks(){
         for(Item item : items) {
@@ -189,9 +192,6 @@ public class PC {
         return this.name;
     }
 
-    public void bite(){
-
-    }
     public boolean hasItems(){
         if(items.isEmpty()){
             return false;
@@ -232,6 +232,7 @@ public class PC {
         System.out.println("\n------- Your Character ------");
         System.out.println("Name    " + this.name);
         System.out.println("-----------------------------");
+        System.out.println("Level   " + this.level);
         System.out.println("Class   " + this.characterClass.getType());
         System.out.println("Type    " + this.characterType.getType());
         System.out.println("-----------------------------");
@@ -240,6 +241,7 @@ public class PC {
         System.out.println("HP      " + this.hitPoints);
         System.out.println("Defense " + this.defense);
         System.out.println("Speed   " + this.speed);
+        System.out.println("XP      " + this.xp);
         System.out.println("-----------------------------");
         System.out.println("Skills  " + skills.toString());
         System.out.println("-----------------------------\n");
@@ -278,5 +280,74 @@ public class PC {
 
     public void resetHitPoints() {
         hitPoints = 20;
+    }
+
+    public void incrementXP(int num) {
+        xp += num;
+    }
+
+    public void incrementLevel() {
+        level++;
+    }
+
+    public int getXP() {
+        return xp;
+    }
+
+    public void setLevel(int num) {
+        level = num;
+    }
+
+    public void incrementHP(int points){
+        hitPoints += points;
+    }
+
+    public int getMana() {
+        return mana;
+    }
+
+    public boolean levelUp(Enemy.Enemy currentEnemy) {
+        if(currentEnemy.getEnemySize().equals("small")) {
+            xp += 10;
+        }
+        else if(currentEnemy.getEnemySize().equals("medium")) {
+            xp += 20;
+        }
+        else if(currentEnemy.getEnemySize().equals("large")) {
+            xp += 30;
+        }
+
+        int newLevel = (level / 50)+1;
+        if(newLevel > 1) {
+            level = newLevel;
+            System.out.println("You leveled up!");
+            System.out.println("                                   .''.       \n" +
+                    "       .''.      .        *''*    :_\\/_:     . \n" +
+                    "      :_\\/_:   _\\(/_  .:.*_\\/_*   : /\\ :  .'.:.'.\n" +
+                    "  .''.: /\\ :   ./)\\   ':'* /\\ * :  '..'.  -=:o:=-\n" +
+                    " :_\\/_:'.:::.    ' *''*    * '.\\'/.' _\\(/_'.':'.'\n" +
+                    " : /\\ : :::::     *_\\/_*     -= o =-  /)\\    '  *\n" +
+                    "  '..'  ':::'     * /\\ *     .'/.\\'.   '\n" +
+                    "      *            *..*         :\n" +
+                    "        *\n" +
+                    "        *");
+            return true;
+        }return false;
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public int getDefense() {
+        return defense;
+    }
+
+    public int getAttack() {
+        return attack;
+    }
+
+    public int getLevel() {
+        return level;
     }
 }

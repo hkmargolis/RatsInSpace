@@ -10,11 +10,11 @@ public class SuperPack extends Item {
      int value;
      final String type = "SuperPack";
     private final Map<String,Integer> superPacks = new HashMap<>(){{
-        put("HealPack", 2);
+        put("HealPack", 5);
         put("StrengthPack", 2);
-        put("PoisonPack", -2);
+        put("PoisonPack", 5);
         put("MaxHealPack", 20);
-        put("BiteyPack", -2);
+        put("BiteyPack", 2);
         put("FleePack", 0);
         }};
     private final ArrayList<String> superPackNames = new ArrayList<>(){{
@@ -28,6 +28,10 @@ public class SuperPack extends Item {
 
     public SuperPack () {
         generateRandomSuperPack();
+    }
+    public SuperPack(String name, int value) {
+        this.name = name;
+        this.value = value;
     }
 
     public void generateRandomSuperPack() {

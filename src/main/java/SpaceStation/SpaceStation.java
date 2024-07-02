@@ -14,15 +14,11 @@ public class SpaceStation {
     private int currentLevel;
     private int totalLevels;
     private Floor currentFloor;
-    private TopFloor topFloor;
-
     private static SpaceStation spaceStation;
 
     //should only ever be one spacestation use design pattern for this
     private SpaceStation() {
         this.currentLevel = 1;
-//        topFloor = new TopFloor();
-//        floor = topFloor;
         this.totalLevels= 1;
     }
 
@@ -51,5 +47,9 @@ public class SpaceStation {
     }
     public int getTotalLevels() {
         return this.totalLevels;
+    }
+
+    public void resetTotalLevels() {
+        totalLevels = 1;
     }
 }

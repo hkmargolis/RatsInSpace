@@ -32,6 +32,7 @@ public class Game {
         getAction();
     }
     public void newGame(){
+        spaceStation.resetTotalLevels();
         cycleFactory = new CycleFactory(spaceStation);
         currentCycle = cycleFactory.getNextCycle();
         currentPart = currentCycle.getPart();
@@ -64,12 +65,19 @@ public class Game {
             currentEnemy = currentFloor.getEnemy();
     }
 
-    public void goToTopFloor() {
-        System.out.println("You made it to the top floor thanks to that comfy gurney.");
-        System.out.println("After a few days in the medbay, you are feeling good as new!");
+    public void goToTopFloorMedBay() {
+        System.out.println("\nYou made it to the top floor thanks to that comfy gurney.");
+        System.out.println("After a few days in the medbay, you are feeling good as new!\n");
         System.out.println("The front desk kindly informs you that you will receive an invoice in just a few short days.");
         player.resetHitPoints();
-        //player.setMana();
+        //player.resetMana();
+        newGame();
+        getAction();
+    }
+
+    public void goToTopFloorLevelUp() {
+        player.resetHitPoints();
+        //player.resetMana();
         newGame();
         getAction();
     }
@@ -127,7 +135,7 @@ public class Game {
                 break;
             } else if(player.getHitPoints() < 3) {
                 System.out.println("Woah there! We better get you to the medbay, LIKE, NOW. Rerouting you to the top floor.");
-                goToTopFloor();
+                goToTopFloorMedBay();
             }else{
                 System.out.println("Your hp: " + player.getHitPoints());
                 handleNPCAction();
@@ -205,6 +213,9 @@ public class Game {
         if(currentEnemy.getEnemyHp() < 0){
             System.out.println("You attacked for " + itemValue + " damage.");
             System.out.println("\nYou slayed the " + currentEnemy.getEnemyName() + "!\n");
+            if(player.levelUp(currentEnemy)){
+                goToTopFloorLevelUp();
+            }
         }
         else{
             System.out.println("You attacked for " + itemValue + " damage.");
@@ -223,7 +234,9 @@ public class Game {
         if(currentEnemy.getEnemyHp() < 0){
             System.out.println("You attacked for " + damage + " damage.");
             System.out.println("\nYou slayed the " + currentEnemy.getEnemyName() + "!\n");
-        }
+            if(player.levelUp(currentEnemy)){
+                goToTopFloorLevelUp();
+            }        }
         else{
             System.out.println("You attacked for " + damage + " damage.");
             System.out.println("\nThe enemy remains a threat!");
@@ -249,28 +262,45 @@ public class Game {
             }
 
             if(item.getItemName().equals("MaxHealPack")) {
+                System.out.println("Your health is fully restored! But you are still in battle...");
                 player.resetHitPoints();
             }
-            if(item.getItemName().equals("BiteyPack")) {
+            else if(item.getItemName().equals("HealPack")) {
+                System.out.println("You gain 5 hitpoints! But you are still in battle...");
+                player.incrementHP(item.getItemValue());
+            }
+            else if(item.getItemName().equals("BiteyPack")) {
                 System.out.println("You bite!");
                 biteEnemy();
                 System.out.println("You bite AGAIN!");
                 biteEnemy();
             }
-            if(roll != 1) {
+            else if(item.getItemName().equals("PoisonPack")) {
+                attackEnemy(item);
+            }
+            else if(item.getItemName().equals("FleePack")) {
+                System.out.println("It is too late to flee! Bite for your life!");
+                biteEnemy();
+            }
+            else if(roll != 1) {
                 attackEnemy(item);
                 player.decrementMana();
             } else{
                 System.out.println("Your attack missed!");
             }
+            if(!item.getItemName().equals("FleePack") ) {
+                player.dropItem(item.getItemName());
+            }
         } else {
             if(roll != 1) {
+                System.out.println("Heck you have no items! You go in for a chomp!");
                 biteEnemy();
             }
             else{
                 System.out.println("Your attack missed!");
             }
-        }player.dropItem(item.getItemName());
+        }
+
     }
 
     public void attackWithSkill(){
@@ -287,7 +317,9 @@ public class Game {
         if(currentEnemy.getEnemyHp() < 0){
             System.out.println("You attacked for " + damage + " damage.");
             System.out.println("\nYou slayed the " + currentEnemy.getEnemyName() + "!\n");
-        }
+            if(player.levelUp(currentEnemy)){
+                goToTopFloorLevelUp();
+            }        }
         else{
             System.out.println("You attacked for " + damage + " damage.");
             System.out.println("\nThe enemy remains a threat!");
