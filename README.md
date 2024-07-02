@@ -11,7 +11,7 @@ RPG Simulator
   https://www.geeksforgeeks.org/gang-of-four-gof-design-patterns/
 - https://refactoring.guru/design-patterns/flyweight
 ## Screencast
-[screencast link](https://www.youtube.com/watch?v=VZEJKdn_OuQ)
+[screencast link](https://www.youtube.com/watch?v=Kkpm0Jeq6F4)
 
 Checklist
 - [x] You can choose from three character classes: biter, thief, wizard.
