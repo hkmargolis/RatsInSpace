@@ -1,5 +1,6 @@
 package Game;
 import SpaceStation.Floor;
+import SpaceStation.SpaceStation;
 
 import java.util.ArrayList;
 
@@ -8,14 +9,15 @@ public class Part {
     //3-5 floors
     private ArrayList<Floor> floors;
 
-    public Part() {
-        floors = generateFloors();
+    public Part(SpaceStation spaceStation) {
+        floors = generateFloors(spaceStation);
     }
 
-    public ArrayList<Floor> generateFloors() {
-        Floor floor1 = new Floor();
-        Floor floor2 = new Floor();
-        Floor floor3 = new Floor();
+    private ArrayList<Floor> generateFloors(SpaceStation spaceStation) {
+        //1 part has 3 floors
+        Floor floor1 = new Floor(spaceStation);
+        Floor floor2 = new Floor(spaceStation);
+        Floor floor3 = new Floor(spaceStation);
         return new ArrayList<>(){{add(floor1); add(floor2); add(floor3);}};
     }
 
@@ -38,4 +40,7 @@ public class Part {
         }
     }
 
+    public boolean isOver() {
+        return floors.isEmpty();
+    }
 }

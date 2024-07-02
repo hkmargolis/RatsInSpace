@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class CharacterClass {
     private String type;
-    private Map<String,Integer> skills;
+    private ArrayList<String> skills;
     public CharacterClass() {
     }
     public String getType() {
@@ -15,10 +15,10 @@ public class CharacterClass {
     public void setType(String type) {
         this.type = type;
     }
-    public Map<String,Integer> getSkills() {
+    public ArrayList<String> getSkills() {
         return this.skills;
     }
-    public void setSkills(Map<String,Integer> skills) {
+    public void setSkills(ArrayList<String> skills) {
         this.skills = skills;
     }
 

@@ -12,9 +12,13 @@ public class Main {
         Scanner in = new Scanner(System.in);
         welcomeMenu();
         if(in.nextInt() == 1){
-            ArrayList<String> pcInfo = getPCInfo();
-            PCFactory pcFactory = new PCFactory(pcInfo);
-            Game game = new Game(pcFactory.getPC());
+            //ArrayList<String> pcInfo = getPCInfo();
+            ArrayList<String> autoPcInfo = new ArrayList<>(){{add("Whiskers"); add("1"); add("1");}};
+            //PCFactory pcFactory = new PCFactory(pcInfo);
+            PCFactory autoPcFactory = new PCFactory(autoPcInfo);
+            //pcFactory.printPC();
+            autoPcFactory.printPC();
+            Game game = new Game(autoPcFactory.getPC());
         } else{
             in.close();
             System.exit(0);
@@ -40,20 +44,25 @@ public class Main {
         Scanner in = new Scanner(System.in);
         System.out.println("Enter a character name: ");
         String name = in.next();
-        System.out.println("Enter a character class:\n1 - Biter\n2 - Thief\n3 - Wizard");
+        //System.out.println("Echo name: " + name);
         int characterClass = -1;
         while(characterClass < 1 || characterClass > 3){
+            //TODO handle if user enters a letter or word instead of an int
             System.out.println("Enter a character class:\n1 - Biter\n2 - Thief\n3 - Wizard");
             characterClass = in.nextInt();
         }
-        System.out.println("Enter a character type:\n 1 - PouchedRat\n 2 - FancyRat\n 3 - WoodRat");
         int characterType = -1;
         while(characterType < 1 || characterType > 3){
+            //TODO handle if user enters a letter or word instead of an int
             System.out.println("Enter a character type:\n 1 - PouchedRat\n 2 - FancyRat\n 3 - WoodRat");
             characterType = in.nextInt();
         }
+
         String cc = String.valueOf(characterClass);
         String ct = String.valueOf(characterType);
+
+        //System.out.println("Echo cc: " + cc);
+        //System.out.println("Echo ct: " + ct);
         return new ArrayList<>(){{add(name); add(cc); add(ct);}};
 
     }

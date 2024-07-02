@@ -1,5 +1,8 @@
 package SpaceStation;
 
-public class TopFloor extends Floor {
-    private final static int LEVEL = 0;
+public class TopFloor {
+    private final static int LEVEL = 1;
+    public TopFloor(){
+
+    }
 }

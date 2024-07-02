@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SmallEnemy extends Enemy {
-    private final Map<String,Integer> smallEnemies = new HashMap<>(){{put("Space Slime", 2);put("Goblin in Spacesuit", 3);put("Ice Rat", 4);put("Space Centipede", 5); }};
+    private final Map<String,Integer> smallEnemies = new HashMap<>(){{put("Space Slime", 2);put("Goblin in Spacesuit", 2);put("Ice Rat", 2);put("Space Centipede", 2); }};
     private final ArrayList<String> names = new ArrayList<String>(){{add("Space Slime"); add("Goblin in Spacesuit"); add("Ice Rat"); add("Space Centipede");}};
 
     public SmallEnemy() {
